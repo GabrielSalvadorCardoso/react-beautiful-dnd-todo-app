@@ -6,9 +6,9 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import initialData from './initial-data';
 import Column from './column';
 
-const Container = styled.div`
-    // display: flex;
-`;
+// const Container = styled.div`
+//     display: flex;
+// `;
 
 class App extends React.Component {
     state = initialData;
@@ -44,9 +44,8 @@ class App extends React.Component {
             newTaskIds.splice(source.index, 1);
             newTaskIds.splice(destination.index, 0, draggableId)
 
-            const newColumn = {...start, taskIds: newTaskIds}
+            const newColumn = {...start, taskIds: newTaskIds}            
             
-            // const newState = {...this.state, columns: {...this.state.columns, [newColumn.id]: [newColumn]}}
             const newState = {
                 ...this.state,
                 columns: {
@@ -81,16 +80,15 @@ class App extends React.Component {
         return (
             <DragDropContext    onDragEnd={this.onDragEnd}
                                 // onDragUpdate={this.onDragUpdate}                                
-                                onDragStart={this.onDragStart}
-            >
-                <Container>
-                    {this.state.columnOrder.map((columnId, index) => {
-                        const column = this.state.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
-                        const isDropDisabled = false;//index < this.state.homeIndex;
-                        return <Column key={column.id} column={column} tasks={tasks} isDropDisabled={isDropDisabled} />;
-                    })}
-                </Container>
+                                onDragStart={this.onDragStart}>
+                {/* <Container> */}
+                {this.state.columnOrder.map((columnId, index) => {
+                    const column = this.state.columns[columnId];
+                    const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+                    const isDropDisabled = false;//index < this.state.homeIndex;
+                    return <Column key={column.id} column={column} tasks={tasks} isDropDisabled={isDropDisabled} />;
+                })}
+                {/* </Container> */}
             </DragDropContext>
         );
     }
